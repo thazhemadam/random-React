@@ -1,26 +1,32 @@
-console.log('App is running.');
-const textToShow = 'This is some hidden text.';
+class VisibilityToggle extends React.Component{
 
-let hiddenText = null;
-let visibilityStatus = false;
-const toggleVisbility = (e) => {
-    visibilityStatus = !visibilityStatus;
-    render();
+    constructor(props){
+        super(props);
+        this.toggleVisibility = this.toggleVisibility.bind(this);
+        this.state = {
+            visibilityStatus: false
+        };
+    }
+
+    toggleVisibility(){
+        this.setState((prevState)=>{
+            return {
+                visibilityStatus : !prevState.visibilityStatus
+            };
+        });
+    }
+
+    render(){
+        return(
+            <div>
+                <h1>Visibility Toggle</h1>
+                <button onClick = {this.toggleVisibility} id = "togglerButton"> {this.state.visibilityStatus? 'Hide!' : 'Show!'} </button>
+                <div>
+                    {this.state.visibilityStatus&& <p>This is some hidden text.</p>}
+                </div>
+            </div>        
+    );
+    }
 }
-const appRoot = document.getElementById('app');
 
-const render = () => {
-const template = (
-    <div>
-        <h1>Visibility Toggle</h1>
-        <button onClick = {toggleVisbility} id = "togglerButton"> {visibilityStatus? 'Hide!' : 'Show!'} </button>
-        <div>
-            {visibilityStatus&& <p>This is some hidden text.</p>}
-        </div>
-    </div>
-);
-
-
-ReactDOM.render(template,appRoot);
-}
-render();
+ReactDOM.render(<VisibilityToggle />,document.getElementById('app'));
